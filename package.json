@@ -4,10 +4,27 @@
   "description": "Node DB 2 Module Challenge",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "dev": "nodemon"
   },
   "author": "Lambda School",
   "devDependencies": {
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huangm96/webdb-ii-challenge.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huangm96/webdb-ii-challenge/issues"
+  },
+  "homepage": "https://github.com/huangm96/webdb-ii-challenge#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.19.5",
+    "pg": "^7.12.1",
+    "sqlite3": "^4.1.0"
   }
 }
