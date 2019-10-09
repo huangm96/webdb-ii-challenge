@@ -22,7 +22,7 @@ server.get('/', (req, res) => {
       });
 })
 
-server.get("/:id", (req, res) => {
+server.get("/:id",validateId, (req, res) => {
     const { id } = req.params;
 
   db("cars")
@@ -39,7 +39,7 @@ server.get("/:id", (req, res) => {
     });
 });
 
-server.post('/', (req, res) => {
+server.post('/',validateCarInfo, (req, res) => {
     db("cars")
       .insert(req.body)
       .then(ids => {
@@ -57,7 +57,7 @@ server.post('/', (req, res) => {
       });
 })
 
-server.put("/:id", (req, res) => {
+server.put("/:id",validateId, (req, res) => {
   db("cars")
     .where({ id: req.params.id })
     .update(req.body)
@@ -74,7 +74,7 @@ server.put("/:id", (req, res) => {
     });
 });
 
-server.delete("/:id",  (req, res) => {
+server.delete("/:id", validateId, (req, res) => {
   db("cars")
     .where({ id: req.params.id })
     .del()
@@ -100,6 +100,23 @@ function validateCarInfo(req, res, next) {
   } else {
     next();
   }
+}
+
+function validateId(req, res, next) {
+  db.select("*")
+    .from("cars")
+    .where("id", "=", req.params.id)
+    .first()
+    .then(car => {
+      if (car) {
+        next();
+      } else {
+        res.status(400).json({ message: "invalid car id" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 }
 
 module.exports = server;
